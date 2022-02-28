@@ -1,0 +1,465 @@
+{% extends 'mobilenumber/basic.html' %}
+{% load reviews %}
+{% block css%}
+<style>
+    .main {
+        background-color: #608bd1;
+        margin-top: -25px;
+        margin-bottom: 10px;
+    }
+
+    .cont {
+        margin-top: 49px;
+        padding: 19px;
+        margin-left: 125px;
+    }
+
+    .number_status {
+        font-size: 1.5em;
+        text-transform: uppercase;
+        border: 1px solid #cecece;
+        display: inline-block;
+        margin: 15px auto;
+        padding: 7px 20px;
+        border-radius: 5px;
+        color: #f5f5f5;
+        background: #220c70;
+    }
+
+    .pie-wrapper {
+        margin-left: -280px;
+        width: 350px;
+        height: 175px;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        z-index: 110;
+    }
+
+    .chart-section {
+        position: relative;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        margin-top: 20px;
+        
+    }
+
+    .chart {
+        margin-left: -278px;
+        padding: 0;
+        /* margin: -2px; */
+        list-style-type: none;
+        position: relative;
+        width: 350px;
+        height: 175px;
+        overflow: hidden;
+    }
+
+    .indicator_info_s {
+        position: absolute;
+        bottom: 2px;
+        left: 12px;
+        z-index: 9;
+        font-size: .4em;
+        text-transform: uppercase;
+        opacity: .7;
+    }
+
+    .indicator_info_d {
+        position: absolute;
+        bottom: 2px;
+        right: 6px;
+        z-index: 9;
+        font-size: .3em;
+        text-transform: uppercase;
+        opacity: .7;
+    }
+
+    .chart li:nth-child(1) {
+        z-index: 5;
+        border-color: #00b686;
+        -webkit-transform: rotate(36deg);
+        -ms-transform: rotate(36deg);
+        transform: rotate(36deg);
+    }
+
+    .chart::before {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+    }
+
+    .chart li {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: inherit;
+        height: inherit;
+        border: 45px solid;
+        border-top: none;
+        border-bottom-left-radius: 175px;
+        border-bottom-right-radius: 175px;
+        -webkit-transform-origin: 50% 0;
+        -ms-transform-origin: 50% 0;
+        transform-origin: 50% 0;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+        -webkit-animation-duration: .4s;
+        animation-duration: .4s;
+        -webkit-animation-timing-function: linear;
+        animation-timing-function: linear;
+    }
+
+    .chart li:nth-child(2) {
+        z-index: 4;
+        border-color: #ff0;
+        -webkit-transform: rotate(72deg);
+        -ms-transform: rotate(72deg);
+        transform: rotate(72deg);
+    }
+
+    .chart li:nth-child(3) {
+        z-index: 3;
+        border-color: #ffd740;
+        -webkit-transform: rotate(108deg);
+        -ms-transform: rotate(108deg);
+        transform: rotate(108deg);
+    }
+
+    .chart li:nth-child(4) {
+        z-index: 2;
+        border-color: #ffab40;
+        -webkit-transform: rotate(144deg);
+        -ms-transform: rotate(144deg);
+        transform: rotate(144deg);
+    }
+
+    .chart li:nth-child(5) {
+        z-index: 1;
+        border-color: #c50e29;
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+    .score {
+        margin-left: 152px;
+        top: 73px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        font-size: 2em;
+        font-weight: 700;
+    }
+
+    .score_text {
+        margin-left: 145px;
+        bottom: 0;
+        position: absolute;
+        left: 0;
+        right: -4px;
+        font-size: .8em;
+        font-weight: 700;
+        color: rgba(0, 0, 0, 0.15);
+        word-spacing: 10px;
+    }
+
+    .a {
+        border: 5px solid transparent;
+        border-top: none;
+        border-radius: 0 0 300px 300px;
+        top: 100%;
+        z-index: 2;
+        position: relative;
+    }
+
+    .a100 {
+        -webkit-transform: rotate(178deg);
+        -ms-transform: rotate(178deg);
+        transform: rotate(178deg);
+        border-color: #000;
+    }
+
+    .see_comments {
+        text-decoration: underline;
+        cursor: pointer;
+        margin-left: 124px;
+        color: aliceblue;
+    }
+    .right-box {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin-left: 93px;
+    margin-top: 42px;
+}
+.span6 {
+    -ms-flex-preferred-size: 50%;
+    -webkit-box-flex: 0 0 50%;
+    -webkit-flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+.right-box__location {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.lc__title {
+    font-weight: 700;
+    display: block;
+}
+table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: grey;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+.comment_item.neutral_comment {
+    border-top: 1px solid #ffab40;
+}
+
+.comment_item {
+    background: #f7f7db;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 20px;
+    border-top-right-radius: 25px;
+}
+.comment_text {
+    border: 1px solid #ffab40;
+    background: rgba(244,159,7,.02);
+    border-radius: 25px;
+    border-top: none;
+}
+.comment_text {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 25px 20px 10px;
+    margin-left: 10px;
+    position: relative;
+    font-size: .85em;
+}
+.comment_item {
+    border-bottom-right-radius: 10px;
+    background: #f7f7db;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    margin-bottom: 20px;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 34px;
+    border-bottom-left-radius: 20px;
+    width: 70%;
+}
+.comment_status {
+    font-weight: 700;
+    position: absolute;
+    top: 4px;
+    right: 20px;
+    padding: 2px 4px;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+.comment_category {
+    font-weight: 700;
+    color: #777;
+    word-spacing: 5px;
+    color: #f49f0a;
+}
+.comments_number.add_rating {
+    color: #000;
+    text-decoration: underline;
+}
+.form-group{
+    border: 2px solid;
+    margin-left: 28px;
+    width: 100%;
+
+}
+.good{
+    color: #12b435;
+    margin-left: 113px;
+}
+.neutral{
+    margin-left: 105px;
+    color: #f49f0a;
+}
+.danger{
+    color: #c50e29;
+    margin-left: 105px;
+}
+#good{
+    -webkit-transform: rotate(2deg);
+        -ms-transform: rotate(2deg);
+        transform: rotate(2deg);
+        border-color: #000;
+}
+#neutral{
+    -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+        border-color: #000;
+}
+#danger{
+    -webkit-transform: rotate(178deg);
+        -ms-transform: rotate(178deg);
+        transform: rotate(178deg);
+        border-color: #000;
+}
+   
+</style>
+{% endblock%}
+{% block body %}
+{% if alluser %}
+<div class="main" style="padding-bottom: 30px;">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="container my-4 cont">
+                <h3>PHONE NUMBER: <span class="text-light">{{alluser.phone_number}}</span></h3>
+                <h2 class="number_status {{alluser.status}}" on="tap:comments.scrollTo(duration=300)" role="button" tabindex="-1">{{alluser.status}}</h2>
+        
+                <div class="chart-section ch" >
+                    <ul class="chart">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <div class="indicator_info_s">Safe</div>
+                        <div class="indicator_info_d">Danger</div>
+                    </ul>
+                    <div class="pie-wrapper">
+                        <div class="a a100  " id="{{alluser.status}}"></div>
+                        {% if alluser.status == "danger" %}
+                        <span class="score">100</span>
+                        {% elif alluser.status == "neutral" %}
+                        <span class="score">50</span>
+                        {% else %}
+                        <span class="score">0</span>
+                        {% endif %}
+                        <span class="score_text">Scam Score</span>
+                    </div>
+                </div>
+                <a class="see_comments" href="#comments" role="button" tabindex="-1">See comments</a>
+        
+        
+        
+        
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="span6 right-box">
+                <div class="right-box__inner">
+                    <h4 class="number_identity no_identity">identity: {{alluser.phone_number}} <br class="show_mobile"> <a
+                            href="#comments"><span class="caller_identity text-light">See comments</span></a> </h4>
+                    <div class="right-box__location lc"> <span class="lc__title">Caller location:</span> <span
+                            class="lc__address"> Glasgow, United Kingdom</span> </div>
+                    <div class="right-box__map"> <img alt="Map" src="../../static/mobilenumber/images/map1.jpeg"
+                            width="300" height="200"> </div>
+                   
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+
+
+</div>
+<div class="container">
+    <h2 class="mt-3" id="comments"> Comments </h2>
+    {% if alluser.phone_number|reviews %}
+    {% for reviews in alluser.phone_number|reviews %}
+    <div class="report_list my-2">
+        <table style="width: 100%;">
+            <tbody>
+                
+                <tr class="comment_item neutral_comment">
+                    
+                    <td class="comment_text">
+                        <div class="comment_time" style="margin-top: -4px;"> {{reviews.date_posted}} </div>
+                         <a href="#">
+                       
+                            <h4>{{reviews.reviewnumber.phone_number}}</h4>
+                        </a>
+                        
+                        <div class="comment_status  {{reviews.review_status}}"> {{reviews.review_status}} </div>
+                        
+                        
+                        
+                        <div class="comment_category"> {{reviews.review}}</div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4 style="margin-left: 20px ;">No Comments found</h4>
+    {% endif %}
+    <h2 class="comments_number add_rating" on="tap:add_comment.scrollTo(duration=300)" role="button" tabindex="-1"> 
+        Help others with your rating 
+    </h2>
+        <form style="width: 75%; ">
+            <div style="display: flex;">
+                <div style="margin-top: 30px;">
+                    <div class="radio" style="color: #12b435; font-weight: 700;">
+                        <label><input type="radio" name="reviewstatus" checked value="good"> Good</label>
+                    </div>
+                    <div class="radio" style="color: #f49f0a; font-weight: 700;">
+                        <label><input type="radio" name="reviewstatus" value="neutral"> Neutral</label>
+                    </div>
+                    <div class="radio " style="color: #c50e29; font-weight: 700;">
+                        <label><input type="radio" name="reviewstatus" value="danger"> Danger</label>
+                    </div>
+                    <p style="margin-right: 80px;"></p>
+                    
+                </div>
+                <input type="text" name="number_review" value="{{alluser.phone_number}}" hidden>
+                <div class="form-group my-2">
+                  <textarea class="form-control" rows="5" id="comment" placeholder="type your review" name="review_text" required></textarea>
+                </div>
+            </div>
+           
+            <button class="btn btn-outline-success my-2 my-sm-0 submit" style="position: absolute;
+            right: 395px;" type="submit">Submit</button>
+        </form>
+    
+   
+
+</div>
+{% else %}
+<h1 style="
+    margin: 102px;
+    text-align: center;
+    color: red;
+">Number Not Found</h1>
+{% endif %}
+{% endblock %}

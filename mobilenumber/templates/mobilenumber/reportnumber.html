@@ -1,0 +1,48 @@
+{% extends 'mobilenumber/basic.html' %}
+{% block css%}
+<style>
+    body{
+        background: #adc0eb;
+    }
+    .form-group{
+    border: 2px solid;
+    margin-left: 28px;
+    width: 100%;
+
+}
+</style>
+{% endblock%}
+{% block body %}
+<div style="background: #adc0eb;padding-bottom: 72px;">
+    <div class="container " >
+        <div class="text-success">{{message}}</div>
+        <h4 style=" padding-top: 10px; margin-left: 105px;">Enter Your Number here</h4>
+        <form style="width: 75%;  ">
+            <input type="tel" id="phone" name="phone" placeholder="+923999999999"  required style="width: 75%; margin-left: 108px; margin-top: 5px; border: 2px solid;"> 
+            <h4 style="    margin-top: 18px; margin-left: 106px; margin-bottom: 0;">Add Your Comment Here</h4>
+            <div style="display: flex;">
+                <div style="margin-top: 30px;" >
+                    <div class="radio" style="color: #12b435; font-weight: 700;">
+                        <label><input type="radio" name="reportedstatus" value="good" checked > Good</label>
+                    </div>
+                    <div class="radio" style="color: #f49f0a; font-weight: 700;">
+                        <label><input type="radio" name="reportedstatus" value="neutral" > Neutral</label>
+                    </div>
+                    <div class="radio " style="color: #c50e29; font-weight: 700;">
+                        <label><input type="radio" name="reportedstatus" value="danger" > Danger</label>
+                    </div>
+                    <p style="margin-right: 80px;"></p>
+                    
+                </div>
+                <div class="form-group my-2">
+                  <textarea class="form-control" rows="5" id="comment" placeholder="type your review" name="reportedcomment" required></textarea>
+                </div>
+            </div>
+           
+            <button class="btn btn-outline-success my-2 my-sm-0 submit" style="position: absolute;
+            right: 403px;" type="submit">Submit</button>
+        </form>
+    </div> 
+</div>
+
+{% endblock %}

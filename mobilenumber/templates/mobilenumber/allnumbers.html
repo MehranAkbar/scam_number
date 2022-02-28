@@ -1,0 +1,31 @@
+{% extends 'mobilenumber/basic.html' %}
+{% block css%}
+<style>
+    .good{
+    color: #12b435;
+    margin-left: 113px;
+}
+.neutral{
+    margin-left: 105px;
+    color: #f49f0a;
+}
+.danger{
+    color: #c50e29;
+    margin-left: 105px;
+}
+</style>
+{% endblock%}
+{% block body %}
+<div class="container" style="max-width: 945px;">
+    {% for number in allnumbers %}
+    <div style="width: 100%;border: 2px solid;display: flex;margin-top: 18px; background: rgb(161, 200, 233);">
+        <h1 style="margin-right: 40px; margin-left: 5px;">{{number.phone_number}}</h1>
+        <h3 class="{{number.status}}" style="margin-left: 360px;margin-top: 14px;right: 234px; position: absolute;">{{number.status}}</h3>
+    </div>
+    {% endfor %}
+
+</div>
+
+
+
+{% endblock %}
