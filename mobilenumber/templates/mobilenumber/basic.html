@@ -13,12 +13,12 @@
     <title>ScamNumber</title>
     <style>
         .navbar {
-            background: rgb(34, 12, 112);
+            background: rgb(15 36 64)
         }
 
-        
 
-        
+
+
 
         body .no-padding {
             padding-left: 0;
@@ -45,25 +45,47 @@
         }
 
         .search {
-            color: #000;
-        }
+            float: left;
+            padding-top: 4px;
+            padding-right: 15px px;
 
+            border-left: 0cm;
+
+            border: 0;
+            padding-right: 24px;
+
+            padding-left: 19px;
+            background: #b4b4ae;
+            margin-left: -42px;
+            padding-bottom: 6px;
+        }
+        .search:hover{
+            color: #4c0b0b;
+        }
         .btn {
             display: inline-block;
-            background-color: #e7dddc;
+            
             color: #4c0b0b;
-            padding: 8px 30px;
-            margin: 10px 0;
-            border-radius: 6px;
+            padding: 7px 30px;
+            
+            border-radius: 19px;
             transition: background 0.5s;
         }
 
         .btn:hover {
-            background: grey;
+            background: rgb(190, 12, 12);
+            border-radius: 1.25rem;
         }
-
-     
-      
+        .toggl_button{
+                color: #ffd54f ; border: 2px solid ; padding: 5px;
+            }
+        @media only screen and (max-width: 600px) {
+            .search{
+                margin-left: 355px;
+    background: #e8f0fe
+            }
+            
+        }  
     </style>
     {% block css%}{% endblock%}
 
@@ -72,31 +94,43 @@
 <body>
     {% load static %}
     <nav class="navbar navbar-expand-lg navbar-light ">
-        <a class="navbar-brand" href="/">ScamNumber</a>
+        <a class="navbar-brand" style="" href="/">ScamNumber</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <form method="get" action="/search/" class="form-inline my-2 my-lg-0" style="">
+                <input class="form-control mr-sm-2"
+                    style="border-radius: 1.25rem; margin-left: 20px; background: #e8f0fe;" type="search"
+                    placeholder="Search Number.." aria-label="Search" name="number" id="mumber" required> <span><button
+                        class="btn btn-outline-success my-2 my-sm-0 search" type="submit" style="background: #e8f0fe;">Go</button></span>
+
+            </form>
+            <ul class="navbar-nav mr-auto toggle_button" >
                 <li class="nav-item active">
-                    <a class="nav-link text-light" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-light mx-2" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link text-light" href="/reportnumber">Report a Number <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-light mx-2" href="/reportnumber">Report a Number <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link text-light mx-2" href="/allnumbers">All Numbers <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link text-light mx-2" href="{% url 'home'  %}">Spam Checker <span
+                            class="sr-only">(current)</span></a>
                 </li>
             </ul>
-            <form method="get" action="/search/" class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search Number.." aria-label="Search"
-                    name="number" id="mumber" required> 
-                    <button class="btn btn-outline-success my-2 my-sm-0 search" type="submit" style="padding-top: 5px;padding-right: 15px;padding-left: 15px;">Search</button>
-            </form>
+            
         </div>
     </nav>
-    
+
     {% block body %} {% endblock %}
-    
+
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

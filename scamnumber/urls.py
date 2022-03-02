@@ -19,4 +19,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mobilenumber.urls')),
+    path('spam_checker/', include('spam_checker.urls')),
+    
 ]

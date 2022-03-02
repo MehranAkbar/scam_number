@@ -10,16 +10,40 @@
     width: 100%;
 
 }
+body{
+    background: radial-gradient(#0f2440, transparent);
+}
+.submit{
+    color: #0f2440;float: right;background: hsl(35, 100%, 63%);font-weight: 700;
+}
+.success{
+    text-align: center;
+    font-weight: 700;
+    font-size: larger;
+}
+@media only screen and (max-width: 900) {
+    .submit{
+        float: right;
+    }
+    
+}
 </style>
 {% endblock%}
 {% block body %}
-<div style="background: #adc0eb;padding-bottom: 72px;">
-    <div class="container " >
-        <div class="text-success">{{message}}</div>
-        <h4 style=" padding-top: 10px; margin-left: 105px;">Enter Your Number here</h4>
+<div style="padding-bottom: 72px;">
+    {% if messages %}
+        <ul class="messages" style="border: 1px solid; background: #ddffdd; padding: 2px;">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+    <div class="container "style="    border: 2px solid yellowgreen;background: #0f2440;padding-bottom: 65px;margin-top: 26px;border-radius: 27px;" >
+        
+        <h4 style=" padding-top: 10px; margin-left: 105px; color: #ffcf49;" >Enter Your Number here</h4>
         <form style="width: 75%;  ">
             <input type="tel" id="phone" name="phone" placeholder="+923999999999"  required style="width: 75%; margin-left: 108px; margin-top: 5px; border: 2px solid;"> 
-            <h4 style="    margin-top: 18px; margin-left: 106px; margin-bottom: 0;">Add Your Comment Here</h4>
+            <h4 style="    margin-top: 18px; margin-left: 106px; margin-bottom: 0;     color: #ffcf49;">Add Your Comment Here</h4>
             <div style="display: flex;">
                 <div style="margin-top: 30px;" >
                     <div class="radio" style="color: #12b435; font-weight: 700;">
@@ -39,8 +63,7 @@
                 </div>
             </div>
            
-            <button class="btn btn-outline-success my-2 my-sm-0 submit" style="position: absolute;
-            right: 403px;" type="submit">Submit</button>
+            <button class="btn btn-outline-success my-2 my-sm-0 submit" style="   " type="submit">Submit</button>
         </form>
     </div> 
 </div>

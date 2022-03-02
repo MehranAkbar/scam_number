@@ -4,8 +4,9 @@ from multiprocessing import context
 from urllib import request
 from webbrowser import get
 from xml.etree.ElementTree import Comment
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
+from django.contrib import messages
 from .models import phonemodel, reviewmodel
 # Create your views here.
 def index(request):
@@ -19,33 +20,41 @@ def search(request):
     review_number = request.GET.get("number_review", None)
     review_status = request.GET.get("reviewstatus", None)
     alluser= phonemodel.objects.filter(phone_number=number)
-   
+    print(alluser)
     if review_text:
         numbers_forigen_key = phonemodel.objects.filter(phone_number=review_number)
         number_fk = numbers_forigen_key[0]
         review = reviewmodel.objects.create(reviewnumber = number_fk, review = review_text, review_status=review_status )
         review.save()
         alluser= phonemodel.objects.filter(phone_number=review_number)
+        return redirect('/')
 
     if alluser.exists():
         alluser = alluser[0]
+    else:
+        number = "+"+number  
+        number = number.replace(" ", '')
+        alluser= phonemodel.objects.filter(phone_number=number)
+        if alluser.exists():
+            alluser = alluser[0]  
         
     print(alluser)
     context= {'alluser': alluser}
+    
     return render(request, 'mobilenumber/search.html', context)
 def reportnumber(request):
     reportednumber= request.GET.get('phone',None)
     reportedstatus= request.GET.get('reportedstatus',None)
     reportedcomment=request.GET.get('reportedcomment',None)
     print(reportednumber, type(reportnumber))
-    print(reportedstatus)
-    print(reportedcomment)
     context = {}
-    context["message"] = ""
     if reportednumber:
-        reports = phonemodel.objects.create(phone_number = reportednumber, comment=reportedcomment, status= reportedstatus)
-        reports.save()
-        context["message"] = "Message complaintis recorded"
+        if phonemodel.objects.filter(phone_number= reportednumber):
+            messages.success(request, 'This number is already reported, you can search and add your review')
+        else:    
+            reports = phonemodel.objects.create(phone_number = reportednumber, comment=reportedcomment, status= reportedstatus)
+            reports.save()
+            messages.success(request, 'You have succesfully reported the number')
         
     return render(request, 'mobilenumber/reportnumber.html', context=context)
 
@@ -54,3 +63,9 @@ def allnumbers(request):
     
     context={'allnumbers': allnumbers}
     return render(request,'mobilenumber/allnumbers.html', context )
+def numberview(request, number_id):
+    one_number= phonemodel.objects.get(id)
+    print(id)
+    context= {'one_number': one_number}
+    return render(request, 'mobilenumber/numbers.html', context)
+
