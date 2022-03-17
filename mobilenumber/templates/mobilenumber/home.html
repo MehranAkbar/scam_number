@@ -281,7 +281,7 @@
         color: #ffeb00;
     }
 
-    .danger {
+    .danger, .DANGER {
         color: #c50e29;
     }
 
@@ -367,9 +367,13 @@
                         <div class="cc__element">
                             <span class="tel-number text-light"> <a href="/search/?number={{number.phone_number}}">{{number.phone_number}}</a></span>
                             <div class="bar-container w_100">
-                                <div class="bar len_bar{{number.phone_number|mostdangerous}}"><span>
+                                {% if number.phone_number|mostdangerous > 16 %}
+                                <div class="bar len_bar16"><span>
                                         {{number.phone_number|mostdangerous}}</span> </div>
-
+                                {% else %}        
+                                <div class="bar len_bar{{number.phone_number|mostdangerous}}"><span>
+                                    {{number.phone_number|mostdangerous}}</span> </div>
+                                {% endif %}
                             </div>
                         </div>
                         {% endif %}
@@ -405,7 +409,7 @@
                     <a href="/search/?number={{number.phone_number}}">
                         <h4 style="color: aliceblue;margin-top: -20px;font-size: initial;">{{number.phone_number}}</h4>
                     </a>
-                    <div class="comment_status {{ number.status}}">{{ number.status}} </div>
+                    <div class="comment_status {{ number.status|lower}}">{{ number.status}} </div>
                     <div class="comment_category">{{number.comment}} </div>
                     <div class="comment_time" style="margin-top: -4px;margin-top: -4px; color: white;"> {{number.date_reported}} </div>
                 </td>

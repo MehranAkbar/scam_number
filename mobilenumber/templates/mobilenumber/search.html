@@ -514,7 +514,7 @@
         margin-top: 40px;
     }
 
-    .line-chart-container a,
+    .line-chart-container ,
     .left-box__inner .line-chart-container h1,
     .left-box__inner .line-chart-container h2,
     .left-box__inner .line-chart-container p,
@@ -602,16 +602,18 @@
     .statistic_item {
         margin-left: 10px;
     }
-    .statistic_name{
+
+    .statistic_name {
         color: aliceblue;
-    padding: 6px;
-    font-weight: 600;
-    font-size: larger;
+        padding: 6px;
+        font-weight: 600;
+        font-size: larger;
     }
-    .statistic_value{
+
+    .statistic_value {
         margin-left: 14px;
         padding: 20px;
-    color: aliceblue;
+        color: aliceblue;
     }
 </style>
 {% endblock%}
@@ -621,14 +623,18 @@
     <div class="row" , style="display: flex;">
         <div class="col-sm-6">
             <div class="container my-4 cont">
-                <h3 style="font-size: larger;">PHONE NUMBER:  <span class="text-light">{{alluser.phone_number}}</span>
+                <h3 style="font-size: larger;">PHONE NUMBER: <span class="text-light">{{alluser.phone_number}}</span>
                 </h3>
                 <h2 class=" {{alluser.status}}" style="    font-size: 27px;margin-left: auto;margin-bottom: 84px;"
                     on="tap:comments.scrollTo(duration=300)" role="button" tabindex="-1"> <span
                         style="color:rgb(27, 23, 23);font-size: 24px;font-weight: 500;">Status:
                     </span>{{alluser.status}}</h2>
                 <p class="" style="color: #faae2b; margin-top: -60px; "> Rating according to reviews by people</p>
+                {% if alluser.phone_number|mostdangerous <= 10 %}
                 <h5 style="margin-left: 60px;color: #f49f0a;">{{alluser.phone_number|mostdangerous}}0% Dangerous</h5>
+                {% else %}
+                <h5 style="margin-left: 60px;color: #f49f0a;">100% Dangerous</h5>
+                {% endif %}
                 <div class="chart-section ch">
 
                     <ul class="chart">
@@ -672,7 +678,7 @@
                     </div>
                 </div>
                 <a class="see_comments" href="#comments" role="button" tabindex="-1">See comments</a>
-               
+
 
 
 
@@ -692,17 +698,18 @@
                         <div class="statistic_item" style="    "> <a href="#comments"> <span
                                     class="statistic_name">Calls</span> <img alt="A view of the sea"
                                     src="../../static/mobilenumber/images/phone_white.svg" width="45" height="45"
-                                    layout="fixed"> <span class="statistic_value">90</span> </a> </div>
-                                    
+                                    layout="fixed"> <span class="statistic_value">{{alluser.phone_number|No_of_comments}}</span> </a> </div>
+
                         <!-- <div class="statistic_item" style="margin-left: 60px;    "> <a href="#comments"> <span -->
-                            <!-- class="statistic_name">Searches</span> <img alt="A view of the sea" -->
-                            <!-- src="../../static/mobilenumber/images/search.svg" width="45" height="45" -->
-                            <!-- layout="fixed"> <span class="statistic_value">290</span> </a> </div> -->
+                        <!-- class="statistic_name">Searches</span> <img alt="A view of the sea" -->
+                        <!-- src="../../static/mobilenumber/images/search.svg" width="45" height="45" -->
+                        <!-- layout="fixed"> <span class="statistic_value">290</span> </a> </div> -->
                         <div class="statistic_item" style=" margin-left: 40px;   "> <a href="#comments"> <span
-                            class="statistic_name">Comments</span> <img alt="A view of the sea"
-                            src="../../static/mobilenumber/images/chat.svg" width="45" height="45"
-                            layout="fixed"> <span class="statistic_value">{{alluser.phone_number|No_of_comments}}</span> </a> </div>
-                        
+                                    class="statistic_name">Comments</span> <img alt="A view of the sea"
+                                    src="../../static/mobilenumber/images/chat.svg" width="45" height="45"
+                                    layout="fixed"> <span
+                                    class="statistic_value">{{alluser.phone_number|No_of_comments}}</span> </a> </div>
+
                     </div>
                 </div>
             </div>
@@ -717,7 +724,7 @@
 <div class="container">
     <h2 class="mt-3" id="comments" style="margin-left: 9px;text-decoration: underline;"> Comments </h2>
     {% if alluser.phone_number|reviews %}
-    
+
     {% for reviews in alluser.phone_number|reviews %}
     <div class="report_list my-2">
         <table style="width: 100%;">
@@ -754,11 +761,12 @@
             <span class="tip tip-up"></span>
             <div class="message">
 
-                
+
 
                 <span class="{{reviews.review_status}}"
-                    style="margin-left: 10px;color: #2a493f;font-weight: 600;font-size: large;">No comments Yet.......</span>
-                
+                    style="margin-left: 10px;color: #2a493f;font-weight: 600;font-size: large;">No comments
+                    Yet.......</span>
+
             </div>
         </div>
     </div>
@@ -805,14 +813,7 @@
 
 
 
-
-{% else %}
-<h1 style="
-    margin: 102px;
-    text-align: center;
-    color: red;
-">Number Not Found</h1>
-
 {% endif %}
+
 
 {% endblock %}
