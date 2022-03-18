@@ -8,10 +8,12 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib import messages
 from .models import phonemodel, reviewmodel
+from django.db.models import Count
 # Create your views here.
 def index(request):
     allnumbers = phonemodel.objects.all()
-    
+    reviews=reviewmodel.objects.annotate(review_count=Count("reviewnumber")).order_by("review_count")
+    print("reviews", reviews)
     context={'allnumbers': allnumbers}
     return render(request, 'mobilenumber/home.html', context)
 def search(request):

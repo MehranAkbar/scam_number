@@ -11,9 +11,17 @@ class phonemodel(models.Model):
     comment= models.CharField(max_length=500)
     status= models.CharField(max_length=10, default="")
     date_reported=models.DateField(default=datetime.datetime.now())
+    
+    
+    def _str_(self):
+        return self.phone_number
 
 class reviewmodel(models.Model):
     reviewnumber= models.ForeignKey(phonemodel, on_delete= models.CASCADE)
     review= models.CharField(max_length=500)
     review_status= models.CharField(max_length=20, default="")
     date_posted=models.DateTimeField(default=datetime.datetime.now())
+    
+    
+    # def _str_(self):
+    #     return self.reviewnumber

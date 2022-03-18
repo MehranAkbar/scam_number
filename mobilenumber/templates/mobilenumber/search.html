@@ -630,10 +630,14 @@
                         style="color:rgb(27, 23, 23);font-size: 24px;font-weight: 500;">Status:
                     </span>{{alluser.status}}</h2>
                 <p class="" style="color: #faae2b; margin-top: -60px; "> Rating according to reviews by people</p>
+                {% if alluser.status == 'DANGER' %}
+                <h5 style="margin-left: 60px;color: #f49f0a;">100% Dangerous</h5>
+                {% else %}
                 {% if alluser.phone_number|mostdangerous <= 10 %}
                 <h5 style="margin-left: 60px;color: #f49f0a;">{{alluser.phone_number|mostdangerous}}0% Dangerous</h5>
                 {% else %}
                 <h5 style="margin-left: 60px;color: #f49f0a;">100% Dangerous</h5>
+                {% endif %}
                 {% endif %}
                 <div class="chart-section ch">
 
@@ -647,6 +651,15 @@
                         <div class="indicator_info_d">Danger</div>
                     </ul>
                     <div class="pie-wrapper">
+                        <!-- {% if alluser.status == 'DANGER' %}
+                        <div class="a a100  " id="score1"></div>
+                        <span class="score">10%</span>
+                        {% endif %} -->
+                        {% if alluser.status == 'DANGER' %}
+                        <div class="a a100  " id="score10"></div>
+                        <span class="score">100%</span>
+                        {% else %}
+
                         <div class="a a100  " id="score{{alluser.phone_number|mostdangerous}}"></div>
                         {% if alluser.phone_number|mostdangerous == 0 %}
                         <span class="score">0%</span>
@@ -674,6 +687,8 @@
                         <div class="a a100  " id="score10"></div>
                         <span class="score">100%</span>
                         {% endif %}
+                        {% endif %}
+                        
                         <span class="score_text" style="color: #ffad40;">Scam Score</span>
                     </div>
                 </div>
@@ -723,7 +738,37 @@
 </div>
 <div class="container">
     <h2 class="mt-3" id="comments" style="margin-left: 9px;text-decoration: underline;"> Comments </h2>
-    {% if alluser.phone_number|reviews %}
+    <div class="report_list my-2">
+        <table style="width: 100%;">
+            <tbody>
+                <div class="dialogbox">
+                    <div class="body">
+                        <span class="tip tip-up"></span>
+                        <div class="message">
+
+                            <a href="#">
+
+                                <h4 style="margin-top: -3px;font-size: 18px;color: black; margin-bottom: 0.2rem;">
+                                    {{alluser.phone_number}}</h4>
+                            </a>
+                            <div class="comment_status  {{alluser.status|lower}}"
+                                style="    padding-top: 0px;margin-right: -16px; "> {{alluser.status}} </div>
+
+                            <span class="{{reviews.review_status}}"
+                                style="margin-left: 10px;color: #2a493f;font-weight: 600;font-size: large;">{{alluser.comment}}</span>
+                            <div class="comment_time" style="margin-top: 0px;"> {{alluser.date_reported}} </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </tbody>
+        </table>
+    </div>
+    
+    
+    <!-- {% if alluser.phone_number|reviews %} -->
 
     {% for reviews in alluser.phone_number|reviews %}
     <div class="report_list my-2">
@@ -755,7 +800,7 @@
         </table>
     </div>
     {% endfor %}
-    {% else %}
+    <!-- {% else %}
     <div class="dialogbox">
         <div class="body">
             <span class="tip tip-up"></span>
@@ -769,9 +814,9 @@
 
             </div>
         </div>
-    </div>
+    </div> -->
 
-    {% endif %}
+    <!-- {% endif %} -->
 </div>
 <div style="padding-top: 6px;    background: #0f2440;   padding-bottom: 65px;">
     <div class="container">

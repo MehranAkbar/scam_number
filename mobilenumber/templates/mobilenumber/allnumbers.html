@@ -26,8 +26,8 @@
         {% for number in allnumbers %}
         <div style="width: 51%;border: 2px solid yellowgreen;margin-top: 18px;background: rgb(15 36 64);margin-left: 181px; border-radius: 20px">
             <h1 style="margin-right: 40px;margin-left: 5px;"><span style="color: #ffd54f; margin-left: 11px; font-size: 22px;">Number:</span><a href="/search/?number={{number.phone_number}}"><span style="font-size: 18px;color: aliceblue;margin-left: 12px;">{{number.phone_number}}</span></a>
-            <h3 class="{{number.status}}" style="margin-left: 16px; font-size: 19px;">
-               <span style="color: #f49f0a; font-size: 22px;">Status:</span> {{number.status}}</h3>
+            <h3 class="{{number.status|lower}}" style="margin-left: 16px; font-size: 19px;">
+               <span style="color: #f49f0a; font-size: 22px;">Status:</span> {{number.status|lower}}</h3>
         </div>
         {% endfor %}
 
