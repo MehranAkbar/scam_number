@@ -625,13 +625,15 @@
             <div class="container my-4 cont">
                 <h3 style="font-size: larger;">PHONE NUMBER: <span class="text-light">{{alluser.phone_number}}</span>
                 </h3>
-                <h2 class=" {{alluser.status}}" style="    font-size: 27px;margin-left: auto;margin-bottom: 84px;"
+                <h2 class=" {{alluser.status|lower}}" style="    font-size: 27px;margin-left: auto;margin-bottom: 84px;"
                     on="tap:comments.scrollTo(duration=300)" role="button" tabindex="-1"> <span
                         style="color:rgb(27, 23, 23);font-size: 24px;font-weight: 500;">Status:
                     </span>{{alluser.status}}</h2>
                 <p class="" style="color: #faae2b; margin-top: -60px; "> Rating according to reviews by people</p>
                 {% if alluser.status == 'DANGER' %}
                 <h5 style="margin-left: 60px;color: #f49f0a;">100% Dangerous</h5>
+                {% elif alluser.status == 'NEUTRAL' %}
+                <h5 style="margin-left: 60px;color: #f49f0a;">50% Dangerous</h5>
                 {% else %}
                 {% if alluser.phone_number|mostdangerous <= 10 %}
                 <h5 style="margin-left: 60px;color: #f49f0a;">{{alluser.phone_number|mostdangerous}}0% Dangerous</h5>
@@ -658,6 +660,9 @@
                         {% if alluser.status == 'DANGER' %}
                         <div class="a a100  " id="score10"></div>
                         <span class="score">100%</span>
+                        {% elif alluser.status == 'NEUTRAL' %}
+                        <div class="a a100  " id="score5"></div>
+                        <span class="score">50%</span>
                         {% else %}
 
                         <div class="a a100  " id="score{{alluser.phone_number|mostdangerous}}"></div>
