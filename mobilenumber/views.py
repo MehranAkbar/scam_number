@@ -1,6 +1,8 @@
 from cgitb import html
 from importlib.resources import contents
+from itertools import count
 from multiprocessing import context
+from tempfile import tempdir
 from urllib import request
 from webbrowser import get
 from xml.etree.ElementTree import Comment
@@ -12,8 +14,26 @@ from django.db.models import Count
 # Create your views here.
 def index(request):
     allnumbers = phonemodel.objects.all()
-    reviews=reviewmodel.objects.annotate(review_count=Count("reviewnumber")).order_by("review_count")
-    print("reviews", reviews)
+    reviews= reviewmodel.objects.all()
+    count= reviews.count()
+    list_of_reviews=[]
+    i=0
+    for review in reviews:
+        review_no= review.reviewnumber.phone_number
+        if not any(d['review_number'] == review_no  for d in list_of_reviews):
+            temp_no= {'review_number': review_no, 'count': i}
+            list_of_reviews.append(temp_no)
+            i=0
+        else:
+            i= i+1
+            pass
+           
+
+    print('list:::::::', list_of_reviews)    
+
+        # print('review_no:::::::', review_no)
+    print('count::::::::::', count)
+   
     context={'allnumbers': allnumbers}
     return render(request, 'mobilenumber/home.html', context)
 def search(request):
